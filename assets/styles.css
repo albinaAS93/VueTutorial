@@ -40,6 +40,18 @@ body {
   border-radius: 50%;
 }
 
+.color-circle.active {
+
+  border: 2px solid red;
+}
+
+.color-circle.cartHasItems {
+
+  outline: thick double #32a1ce;
+}
+
+
+
 
 .disabledButton {
   background-color: #d8d8d8;

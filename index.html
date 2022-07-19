@@ -3,17 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <title>Vue Mastery</title>
-    <!-- Import Styles -->
     <link rel="stylesheet" href="./assets/styles.css" />
-    <!-- Import Vue.js -->
     <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
   </head>
   <body>
+
     <div id="app">
-      <h1>Product goes here</h1>
+
+      <div class="nav-bar"></div>
+
+      <div class="cart">Cart({{ cart }})</div>
+
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image">
+            <img v-bind:src="image" :alt="socks">
+          </div>
+          <div class="product-info">
+            <!-- <h3>{{ brand + ' ' + product }}</h3> -->    <!-- remove this while using computed property! you can find it inside the main.js, after methods -->
+            <h3>{{ title }}</h3>
+            <p v-if="inStock">In stock</p>
+            <p v-else>Out of stock</p>
+            <!-- <p v-show="inStock">In stock</p> -->  <!-- same as if/else -->
+            <!-- <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+            <p v-else>Out of Stock</p> -->
+            <ul>
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+            <div 
+              v-for="variant in variants" 
+              :key="variant.id" 
+              @mouseover="updateImage(variant.image)"
+              class="color-circle"
+              :class="{ active: variant.isActive, cartHasItems: cart > 0 }"
+              @click="variant.isActive = ! variant.isActive"
+              :style="{ backgroundColor: variant.color }">  <!-- while using js we use camelCase property instead of writing background-color, because obviously, in js, that is a minus! otherwise we can use 'kebab-cased' property! Another way is style binding, so we must have :style="styles" where "styles" is included in our main.js inside the data() function -->
+              <!-- {{ variant.color }} -->  <!-- remove this when you add class and style attributes -->
+            </div>
+            <!-- <button class="button" v-on:click="cart += 1">Add to Cart</button> -->   <!-- same as bottom -->
+            <!-- <button class="button" v-on:click="addToCart">Add to Cart</button> -->   <!-- same as top and bottom -->
+            <button 
+              class="button" 
+              :class="{disabledButton: !inStock }"
+              :disabled="!inStock"
+              @click="addToCart">
+              Add to Cart
+            </button>    <!-- same as top -->
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Import Js -->
+    <!-- Import App -->
     <script src="./main.js"></script>
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
 </html>
